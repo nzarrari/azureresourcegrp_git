@@ -1,0 +1,21 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualNetworkName": {
+      "value": "CDS.PROD-DR.VNET"
+    },
+    "addressPrefix": {
+      "value": "10.3.0.0/16"
+    },
+    "subnet1Prefix": {
+      "value": "10.3.0.0/24"
+    },
+    "gatewaySubnetPrefix": {
+      "value": "10.3.200.0/29"
+    },
+    "nsgName": {
+      "value": "allowRDPandWEB"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "SASToken": {
+      "type": "string",
+      "metadata": {
+        "description": "SAS Token"
+    },
+    "templateBaseUrl": {
+      "type": "string",
+      "metadata": {
+        "description": "Template Base URL"
+        }      
+      }
+    }
+  },
+  "resources": [
+      {
+        "apiVersion": "2015-01-01",
+        "name": "NSGDeployment",
+        "type": "Microsoft.Resources/deployments",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[concat(parameters('templateBaseUrl'), 'nsg/nsg.json', parameters('SASToken'))]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parametersLink": {
+            "uri": "[concat(parameters('templateBaseUrl'), 'nsg/nsg.parameters.json', parameters('SASToken'))]",
+            "contentVersion": "1.0.0.0"
+          }
+        }
+      },
+      {
+        "apiVersion": "2015-01-01",
+        "name": "VnetDeployment",
+        "type": "Microsoft.Resources/deployments",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[concat(parameters('templateBaseUrl'), 'vnet/vnet.json', parameters('SASToken'))]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parametersLink": {
+            "uri": "[concat(parameters('templateBaseUrl'), 'vnet/vnet.parameters.json', parameters('SASToken'))]",
+            "contentVersion": "1.0.0.0"
+          }
+        },
+        "dependsOn": [
+          "NSGDeployment"
+        ]
+      }
+    ]
+  }
